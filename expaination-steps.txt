@@ -1,0 +1,71 @@
+ EXPLANATION OF THE CODE :
+
+ 1. Libraries and Constants:
+
+ ● numpy is imported for numerical operations with arrays.
+ ● sigma_x and sigma_z define the Pauli X and Z matrices, which are
+ important single-qubit operators in quantum mechanics.
+
+ 2. Gate Functions:
+
+ ● apply_gate(gate, state, qubit, num_qubits): This function
+ applies a single-qubit gate (represented by a matrix) to a specific qubit
+ in a multi-qubit state. It uses Kronecker product to expand the gate to
+ act on all qubits while only affecting the target qubit.
+ ● apply_cnot(control, target, state, num_qubits): This function
+ applies a CNOT gate between two specific qubits in a multi-qubit state.
+ The CNOT gate performs a controlled NOT operation, flipping the
+ target qubit only if the control qubit is in the state |1>.
+
+ 3. Measurement Function:
+
+● measure(state, qubit, num_qubits): This function simulates the
+ measurement of a specific qubit in a multi-qubit state. It calculates the
+ probabilities of finding the qubit in |0> or |1> state based on the state
+ vector and performs a random measurement according to those
+ probabilities. The function also projects the state vector onto the
+ measured outcome.
+
+ 4. Teleportation Function:
+
+ ● teleportation(psi): This function is the core of the code and
+ performs quantum teleportation. Here's a step-by-step explanation of
+ what it does:
+ ○ Initialization:
+ ■ Sets the number of qubits (num_qubits) to 3 (one for the
+ state to teleport and two entangled qubits).
+ ■ Creates the initial state as the tensor product of the state
+ to teleport psi with the entangled state |00>. This
+ entangled state is crucial for teleportation.
+ ○ Entanglement Creation:
+ ■ Applies a Hadamard gate to the second qubit. This creates
+ entanglement between the first two qubits.
+ ○ Bell State Measurement:
+ ■ Applies CNOT gates in a specific order to perform a Bell
+ state measurement on the first two qubits. These
+ measurements don't directly reveal the state psi, but they
+ establish a correlation with the third qubit that allows
+ teleportation. The measurement results (stored in m0 and
+ m1) are printed.
+ ○ Error Correction:
+ ■ Depending on the measurement outcomes (m0 and m1),
+ Pauli X or Z gates are applied to the third qubit to correct
+ its state based on the entangled connection established
+ earlier.
+ ○ Extracting Bob's State:
+ ■ Identifies the indices in the state vector that correspond to
+ the third qubit being |1>.
+ ■ Extracts the state vector corresponding to the third qubit
+ (Bob's qubit).
+○ Normalization:
+ ■ Normalizes Bob's state vector to ensure it represents a
+ valid quantum state.
+ ○ Return:
+ ■ The function returns the teleported state (Bob's qubit).
+
+ 5. Example Usage:
+
+ ● The code defines a sample state psi = np.array([0, 1])
+ representing the state |1>.
+ ● It calls the teleportation function with this state and prints the
+ resulting teleported state.
